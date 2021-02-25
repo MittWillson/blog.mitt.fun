@@ -201,10 +201,15 @@
 
   </section>
   <section class="article typo">
-	  <p><strong>配个鬼，洗洗睡</strong></p>
-<p>待续….</p>
+	  <h2 id="pre-post"><a href="#pre-post" class="headerlink" title="pre-post()"></a>pre-post()</h2><p>为了方便部署流量转发服务，采用了Docker来干这个事，一般情况下一台节点只有一个IP，使用端口映射或者用参数 <code>--network host</code> 直接使用主机的网络来监听和转发是没有问题的，但是有一些节点会存在多个或一个段的外部IP，这时候虽然 <code>IN</code> 方向没有问题，但是 <code>OUT</code> 方向只会采用主机设置的默认路由来访问，就导致了转发的流量都使用同一个IP转发出去了，这是不对的，所以接下来就研究如何才能自定义出口流量，这篇文章则采用给容器配置外部IP的方式实现。</p>
+<blockquote>
+<p>此方法适合非NAT主机</p>
+</blockquote>
 
-
+    
+	  <div class="readmore">
+      <a href="/service/2018/docker/Docker-%E7%BB%99%E6%AF%8F%E4%B8%AA%E5%AE%B9%E5%99%A8%E9%85%8D%E7%BD%AE%E5%85%AC%E7%BD%91IP/">Read More</a>
+    </div>
     
     
     

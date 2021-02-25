@@ -20,7 +20,7 @@
 <meta property="og:description" content="pre-post()最近有在学习K8S相关，同时也将自己的所有服务全部都迁移到了K8S集群上，感受到K8S强大的同时也能明显感受到对于我这种一般用户环境的部署不是很友好，例如建议的高可用集群至少要有 三台 Master, 三台 Worker, 对我这种 穷逼 普通玩家来说是很高昂的，但经过几次实践把生产环境搞炸几次后觉得这是有必要的(哭)，但我的想法是用K8S作为我主要部署方式，所以还是非常高昂的">
 <meta property="og:locale">
 <meta property="article:published_time" content="2021-02-25T05:07:29.000Z">
-<meta property="article:modified_time" content="2021-02-25T10:16:57.372Z">
+<meta property="article:modified_time" content="2021-02-25T10:34:05.797Z">
 <meta property="article:author" content="Mitt Willson">
 <meta property="article:tag" content="Wireguard">
 <meta property="article:tag" content="Kilo">
@@ -41,7 +41,7 @@
       document.getElementById('loading-bar').style.width=num+"%";
     }
   </script>
-<meta name="generator" content="Hexo 5.3.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <body>
   <div id="loading-bar-wrapper">
@@ -156,6 +156,8 @@
 	<section class="article typo">
   	<div class="article-entry" itemprop="articleBody">
     	<h2 id="pre-post"><a href="#pre-post" class="headerlink" title="pre-post()"></a>pre-post()</h2><p>最近有在学习K8S相关，同时也将自己的所有服务全部都迁移到了K8S集群上，感受到K8S强大的同时也能明显感受到对于我这种一般用户环境的部署不是很友好，例如建议的高可用集群至少要有 <code>三台</code> Master, <code>三台</code> Worker, 对我这种 <del>穷逼</del> 普通玩家来说是很高昂的，但经过几次实践把生产环境搞炸几次后觉得这是有必要的(哭)，但我的想法是用K8S作为我主要部署方式，所以还是非常高昂的，像我这种为了能够管理所有节点但是又不会重度使用K8S的，这里推荐 <code>K3S</code> 来代替K8S作为要求不高的生产环境，不过这篇文章还是用完整的K8S来做，但理论上 <code>K3S</code> 是完全通用的。</p>
+<span id="more"></span>
+
 <h2 id="subject-‘实现目标’"><a href="#subject-‘实现目标’" class="headerlink" title="subject(‘实现目标’)"></a>subject(‘实现目标’)</h2><p>利用 <code>Kilo</code> 将带有公网IP的NAT云服务器组成K8S集群，支持 <code>P2P</code>, <code>DDNS</code> (要求有公网IP且需要端口映射)</p>
 <h2 id="subject-‘Kilo介绍’"><a href="#subject-‘Kilo介绍’" class="headerlink" title="subject(‘Kilo介绍’)"></a>subject(‘Kilo介绍’)</h2><p><a target="_blank" rel="noopener" href="https://github.com/squat/kilo">Kilo</a> 是一个通过 <code>Wireguard</code> 用于建立混合云网络的工具</p>
 <h2 id="subject-‘现有问题’"><a href="#subject-‘现有问题’" class="headerlink" title="subject(‘现有问题’)"></a>subject(‘现有问题’)</h2><p>我的服务器构成是这样的(以下IP皆为虚拟): </p>
@@ -235,6 +237,7 @@
 </tbody></table>
 <h3 id="安装-Kilo"><a href="#安装-Kilo" class="headerlink" title="安装 Kilo"></a>安装 Kilo</h3><p>Kubeadm</p>
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl apply -f https:<span class="regexp">//</span>raw.githubusercontent.com<span class="regexp">/squat/</span>kilo<span class="regexp">/master/m</span>anifests/kilo-kubeadm-flannel.yaml</span><br></pre></td></tr></table></figure>
+
 <blockquote>
 <p>如果要卸载，直接 kubectl delete 就好了</p>
 </blockquote>

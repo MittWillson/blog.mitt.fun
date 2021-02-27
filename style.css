@@ -935,8 +935,6 @@ ul.h-list > li {
 .l_main .post-list {
   position: relative;
   margin: 0px auto;
-  -moz-columns: 400px;
-       columns: 400px;
   -moz-column-gap: 0;
        column-gap: 0;
   margin: -10px;

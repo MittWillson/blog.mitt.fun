@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   
-  <title>Tag: K8S | Mitt&#39;s Fun space!</title>
+  <title>Tag: CNAME | Mitt&#39;s Fun space!</title>
   <meta name="description" content="Mitt 的菜鸡技术博客 | 可恶的Edison" />
   <meta name="keywords" content="" />
   <meta name="HandheldFriendly" content="True" />
@@ -15,7 +15,7 @@
   <meta name="description" content="Mitt 的菜鸡技术博客 | 可恶的Edison">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Mitt&#39;s Fun space!">
-<meta property="og:url" content="https://blog.mitt.fun/tags/K8S/index.html">
+<meta property="og:url" content="https://blog.mitt.fun/tags/CNAME/index.html">
 <meta property="og:site_name" content="Mitt&#39;s Fun space!">
 <meta property="og:description" content="Mitt 的菜鸡技术博客 | 可恶的Edison">
 <meta property="og:locale">
@@ -135,7 +135,7 @@
       <div class='l_main'>
         
   <script>
-    window.subData= { title:'Tag : K8S'}
+    window.subData= { title:'Tag : CNAME'}
   </script>
 
 <section class="post-list">
@@ -145,44 +145,54 @@
   <section class="meta">
     
     <h2 class="title">
-      <a href="/service/kubernetes/2021/kubernetes/k8s-%E6%B7%B7%E5%90%88%E4%BA%91%E7%BB%84%E7%BD%91/">
-        关于《Kubernetes 混合云用Kilo解决NAT节点通讯的问题》的那件事
+      <a href="/dns/2021/domain/dns-mx-cname-coexist/">
+        使MX和CNAME共存 解决域名邮箱问题
       </a>
     </h2>
     
     <time>
-      Feb 25, 2021
+      Feb 27, 2021
     </time>
 		
     
     <div class='cats'>
-        <a href="/categories/service/">service</a>, <a href="/categories/service/kubernetes/">kubernetes</a>
+        <a href="/categories/dns/">dns</a>
     </div>
 
   </section>
   <section class="article typo">
-	  <h2 id="pre-post"><a href="#pre-post" class="headerlink" title="pre-post()"></a>pre-post()</h2><p>最近有在学习K8S相关，同时也将自己的所有服务全部都迁移到了K8S集群上，感受到K8S强大的同时也能明显感受到对于我这种一般用户环境的部署不是很友好，例如建议的高可用集群至少要有 <code>三台</code> Master, <code>三台</code> Worker, 对我这种 <del>穷逼</del> 普通玩家来说是很高昂的，但经过几次实践把生产环境搞炸几次后觉得这是有必要的(哭)，但我的想法是用K8S作为我主要部署方式，所以还是非常高昂的，像我这种为了能够管理所有节点但是又不会重度使用K8S的，这里推荐 <code>K3S</code> 来代替K8S作为要求不高的生产环境，不过这篇文章还是用完整的K8S来做，但理论上 <code>K3S</code> 是完全通用的。</p>
+	  <h2 id="pre-post"><a href="#pre-post" class="headerlink" title="pre-post()"></a>pre-post()</h2><p>因为我自己搞了一个域名邮箱，用的腾讯企业邮箱，之前为了上国内CDN从<code>Cloudflare</code> 迁移出来换成 <code>Cloudflare Partner</code>，用 <code>DNSPOD</code> 实现 <code>GEODNS</code>，国内用 <code>百度CDN</code>，国外用 <code>Cloudflare</code>，通过 <code>CNAME</code> 解析指向，但是后面发现一个问题就是域名邮箱突然无法正常收发邮件了，网上通过谷歌和其他博主的博文得知这是DNS的特性导致的(<a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考5</a>)，如果想要解决就只能<code>A+MX</code>的共存方式，但是显然这种方式对我来说弊端很多，另一种方案就是将网站解析到<code>www</code>子域名，把<code>@</code>腾出来给<code>MX</code>，或者将域名邮箱解析到 <code>mail</code> 子域名，虽然对大部分人来说可行，但是对我有点强迫症，我就想用<code>@</code>，毕竟chrome都模糊化<code>www</code>和<code>@</code>了，自然是<code>@</code>更适合一点，接下来的方法就是我自己瞎鼓捣出来的，但是又没有查询相关资料证明100%不会出问题，但到目前来看还是很稳的，也不确定放到其他DNS服务商以及其他CDN服务商是否同样有效。</p>
 
     
 	  <div class="readmore">
-      <a href="/service/kubernetes/2021/kubernetes/k8s-%E6%B7%B7%E5%90%88%E4%BA%91%E7%BB%84%E7%BD%91/">Read More</a>
+      <a href="/dns/2021/domain/dns-mx-cname-coexist/">Read More</a>
     </div>
     
     
     
 	  <div class="full-width auto-padding tags">
       
-        <a href="/tags/Wireguard/">Wireguard</a>
+        <a href="/tags/DNS/">DNS</a>
       
-        <a href="/tags/Kilo/">Kilo</a>
+        <a href="/tags/%E5%9F%9F%E5%90%8D%E9%82%AE%E7%AE%B1/">域名邮箱</a>
       
-        <a href="/tags/Peer2Peer/">Peer2Peer</a>
+        <a href="/tags/%E4%BC%81%E4%B8%9A%E9%82%AE%E7%AE%B1/">企业邮箱</a>
       
-        <a href="/tags/Kubernetes/">Kubernetes</a>
+        <a href="/tags/GEODNS/">GEODNS</a>
       
-        <a href="/tags/K8S/">K8S</a>
+        <a href="/tags/%E5%8C%BA%E5%9F%9F%E8%A7%A3%E6%9E%90/">区域解析</a>
       
-        <a href="/tags/K3S/">K3S</a>
+        <a href="/tags/MX%E5%85%B1%E5%AD%98/">MX共存</a>
+      
+        <a href="/tags/MX/">MX</a>
+      
+        <a href="/tags/CNAME/">CNAME</a>
+      
+        <a href="/tags/Cloudflare/">Cloudflare</a>
+      
+        <a href="/tags/Dnspod/">Dnspod</a>
+      
+        <a href="/tags/%E7%99%BE%E5%BA%A6CDN/">百度CDN</a>
       
 	  </div>
     

@@ -6,7 +6,7 @@ var customSearch;
 	const scrollCorrection = 70; // (header height = 50px) + (gap = 20px)
 	function scrolltoElement(elem, correction) {
 		correction = correction || scrollCorrection;
-		const $elem = elem.href ? $(elem.getAttribute('href')) : $(elem);
+		const $elem = elem.href ? $(decodeURI(elem.getAttribute('href'))) : $(elem);
 		$('html, body').animate({ 'scrollTop': $elem.offset().top - correction }, 400);
 	};
 
@@ -143,7 +143,7 @@ var customSearch;
 
 		const liElements = Array.from($toc.find('li a'));
 		//function animate above will convert float to int.
-		const getAnchor = () => liElements.map(elem => Math.floor($(elem.getAttribute('href')).offset().top - scrollCorrection));
+		const getAnchor = () => liElements.map(elem => Math.floor($(decodeURI(elem.getAttribute('href'))).offset().top - scrollCorrection));
 
 		let anchor = getAnchor();
 		const scrollListener = () => {

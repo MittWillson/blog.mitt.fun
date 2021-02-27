@@ -4,7 +4,7 @@
   
     
     <entry>
-      <title>使MX和CNAME共存 解决域名邮箱问题</title>
+      <title>域名解析使MX和CNAME共存 解决域名邮箱收发件问题</title>
       <link href="dns/2021/domain/dns-mx-cname-coexist/"/>
       <url>dns/2021/domain/dns-mx-cname-coexist/</url>
       

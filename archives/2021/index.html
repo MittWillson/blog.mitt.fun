@@ -70,6 +70,12 @@
 						</li>
 					
 						<li>
+							<a class='flat-box nav-' target="_blank" rel="noopener" href='https://status.mitt.fun'>
+								Status
+							</a>
+						</li>
+					
+						<li>
 							<a class='flat-box nav-about' href='/about'>
 								About
 							</a>
@@ -141,6 +147,48 @@
 
 <section class="post-list">
 	
+    <div class='post-wrapper'>
+      <article class="post reveal">
+  <section class="meta">
+    
+    <h2 class="title">
+      <a href="/nihility/2021/script/cf-workers-redirect-to-friends/">
+        利用 Cloudflare Workers 创建一个跳转友链服务(乞丐级简易版)
+      </a>
+    </h2>
+    
+    <time>
+      Mar 3, 2021
+    </time>
+		
+  </section>
+  <section class="article typo">
+	  <h2 id="pre-post"><a href="#pre-post" class="headerlink" title="pre-post()"></a>pre-post()</h2><p>水了几篇博文胆子肥了起来，开始到处交换友链，但是想创建一个简便易维护的友链服务，前期先实现能跳转到目标链接，后期想能扩展扩展支持监控友链目标网站的有效状态，结合通知来实现报警，但本篇只实现了 <code>能用</code> （逃，如果没咕咕咕的话以后会升级代码并支持更高级的功能然后<del>再水一篇</del>发布新文章来介绍。</p>
+<blockquote>
+<p>更新日期: 2021-03-03</p>
+</blockquote>
+
+    
+	  <div class="readmore">
+      <a href="/nihility/2021/script/cf-workers-redirect-to-friends/">Read More</a>
+    </div>
+    
+    
+    
+	  <div class="full-width auto-padding tags">
+      
+        <a href="/tags/Cloudflare/">Cloudflare</a>
+      
+        <a href="/tags/Scripts/">Scripts</a>
+      
+        <a href="/tags/Friends/">Friends</a>
+      
+	  </div>
+    
+  </section>
+</article>
+    </div>
+  
     <div class='post-wrapper'>
       <article class="post reveal">
   <section class="meta">
@@ -328,7 +376,7 @@
 <div class="m_widget tagcloud">
     <div class="header">Tags</div>
     <div class='content'>
-        <a href="/tags/CNAME/" style="font-size: 14px; color: #808080">CNAME</a> <a href="/tags/Cloudflare/" style="font-size: 14px; color: #808080">Cloudflare</a> <a href="/tags/DNS/" style="font-size: 14px; color: #808080">DNS</a> <a href="/tags/Dnspod/" style="font-size: 14px; color: #808080">Dnspod</a> <a href="/tags/Docker/" style="font-size: 14px; color: #808080">Docker</a> <a href="/tags/GEODNS/" style="font-size: 14px; color: #808080">GEODNS</a> <a href="/tags/K3S/" style="font-size: 14px; color: #808080">K3S</a> <a href="/tags/K8S/" style="font-size: 14px; color: #808080">K8S</a> <a href="/tags/Kilo/" style="font-size: 14px; color: #808080">Kilo</a> <a href="/tags/Kubernetes/" style="font-size: 14px; color: #808080">Kubernetes</a> <a href="/tags/MX/" style="font-size: 14px; color: #808080">MX</a> <a href="/tags/MX%E5%85%B1%E5%AD%98/" style="font-size: 14px; color: #808080">MX共存</a> <a href="/tags/Milestone/" style="font-size: 14px; color: #808080">Milestone</a> <a href="/tags/Peer2Peer/" style="font-size: 14px; color: #808080">Peer2Peer</a> <a href="/tags/Wireguard/" style="font-size: 14px; color: #808080">Wireguard</a> <a href="/tags/%E4%BC%81%E4%B8%9A%E9%82%AE%E7%AE%B1/" style="font-size: 14px; color: #808080">企业邮箱</a> <a href="/tags/%E5%8C%BA%E5%9F%9F%E8%A7%A3%E6%9E%90/" style="font-size: 14px; color: #808080">区域解析</a> <a href="/tags/%E5%9F%9F%E5%90%8D%E9%82%AE%E7%AE%B1/" style="font-size: 14px; color: #808080">域名邮箱</a> <a href="/tags/%E7%99%BE%E5%BA%A6CDN/" style="font-size: 14px; color: #808080">百度CDN</a>
+        <a href="/tags/CNAME/" style="font-size: 14px; color: #808080">CNAME</a> <a href="/tags/Cloudflare/" style="font-size: 20px; color: #000">Cloudflare</a> <a href="/tags/DNS/" style="font-size: 14px; color: #808080">DNS</a> <a href="/tags/Dnspod/" style="font-size: 14px; color: #808080">Dnspod</a> <a href="/tags/Docker/" style="font-size: 14px; color: #808080">Docker</a> <a href="/tags/Friends/" style="font-size: 14px; color: #808080">Friends</a> <a href="/tags/GEODNS/" style="font-size: 14px; color: #808080">GEODNS</a> <a href="/tags/K3S/" style="font-size: 14px; color: #808080">K3S</a> <a href="/tags/K8S/" style="font-size: 14px; color: #808080">K8S</a> <a href="/tags/Kilo/" style="font-size: 14px; color: #808080">Kilo</a> <a href="/tags/Kubernetes/" style="font-size: 14px; color: #808080">Kubernetes</a> <a href="/tags/MX/" style="font-size: 14px; color: #808080">MX</a> <a href="/tags/MX%E5%85%B1%E5%AD%98/" style="font-size: 14px; color: #808080">MX共存</a> <a href="/tags/Milestone/" style="font-size: 14px; color: #808080">Milestone</a> <a href="/tags/Peer2Peer/" style="font-size: 14px; color: #808080">Peer2Peer</a> <a href="/tags/Scripts/" style="font-size: 14px; color: #808080">Scripts</a> <a href="/tags/Wireguard/" style="font-size: 14px; color: #808080">Wireguard</a> <a href="/tags/%E4%BC%81%E4%B8%9A%E9%82%AE%E7%AE%B1/" style="font-size: 14px; color: #808080">企业邮箱</a> <a href="/tags/%E5%8C%BA%E5%9F%9F%E8%A7%A3%E6%9E%90/" style="font-size: 14px; color: #808080">区域解析</a> <a href="/tags/%E5%9F%9F%E5%90%8D%E9%82%AE%E7%AE%B1/" style="font-size: 14px; color: #808080">域名邮箱</a> <a href="/tags/%E7%99%BE%E5%BA%A6CDN/" style="font-size: 14px; color: #808080">百度CDN</a>
     </div>
 </div>
 

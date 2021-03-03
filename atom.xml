@@ -18,8 +18,8 @@
   
   <entry>
     <title>利用 Cloudflare Workers 创建一个跳转友链服务(乞丐级简易版)</title>
-    <link href="https://blog.mitt.fun/nihility/2021/script/cf-workers-redirect-to-friends/"/>
-    <id>https://blog.mitt.fun/nihility/2021/script/cf-workers-redirect-to-friends/</id>
+    <link href="https://blog.mitt.fun/scripts/2021/script/cf-workers-redirect-to-friends/"/>
+    <id>https://blog.mitt.fun/scripts/2021/script/cf-workers-redirect-to-friends/</id>
     <published>2021-03-03T12:33:09.000Z</published>
     <updated>2021-03-03T12:33:09.000Z</updated>
     
@@ -32,6 +32,8 @@
 &lt;/blockquote&gt;</summary>
     
     
+    
+    <category term="scripts" scheme="https://blog.mitt.fun/categories/scripts/"/>
     
     
     <category term="Cloudflare" scheme="https://blog.mitt.fun/tags/Cloudflare/"/>
@@ -142,8 +144,8 @@
   
   <entry>
     <title>Hello World</title>
-    <link href="https://blog.mitt.fun/nihility/2018/hello-world/"/>
-    <id>https://blog.mitt.fun/nihility/2018/hello-world/</id>
+    <link href="https://blog.mitt.fun/misc/2018/hello-world/"/>
+    <id>https://blog.mitt.fun/misc/2018/hello-world/</id>
     <published>2018-01-28T17:30:37.000Z</published>
     <updated>2021-02-25T03:57:00.000Z</updated>
     

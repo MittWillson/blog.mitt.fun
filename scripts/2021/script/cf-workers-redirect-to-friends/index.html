@@ -15,7 +15,7 @@
   <meta name="description" content="pre-post()水了几篇博文胆子肥了起来，开始到处交换友链，但是想创建一个简便易维护的友链服务，前期先实现能跳转到目标链接，后期想能扩展扩展支持监控友链目标网站的有效状态，结合通知来实现报警，但本篇只实现了 能用 （逃，如果没咕咕咕的话以后会升级代码并支持更高级的功能然后再水一篇发布新文章来介绍。  更新日期: 2021-03-03">
 <meta property="og:type" content="article">
 <meta property="og:title" content="利用 Cloudflare Workers 创建一个跳转友链服务(乞丐级简易版)">
-<meta property="og:url" content="https://blog.mitt.fun/nihility/2021/script/cf-workers-redirect-to-friends/index.html">
+<meta property="og:url" content="https://blog.mitt.fun/scripts/2021/script/cf-workers-redirect-to-friends/index.html">
 <meta property="og:site_name" content="Mitt&#39;s Fun space!">
 <meta property="og:description" content="pre-post()水了几篇博文胆子肥了起来，开始到处交换友链，但是想创建一个简便易维护的友链服务，前期先实现能跳转到目标链接，后期想能扩展扩展支持监控友链目标网站的有效状态，结合通知来实现报警，但本篇只实现了 能用 （逃，如果没咕咕咕的话以后会升级代码并支持更高级的功能然后再水一篇发布新文章来介绍。  更新日期: 2021-03-03">
 <meta property="og:locale">
@@ -149,7 +149,7 @@
   itemscope itemprop="blogPost">
 	<section class='meta'>
 	<h2 class="title">
-  	<a href="/nihility/2021/script/cf-workers-redirect-to-friends/">
+  	<a href="/scripts/2021/script/cf-workers-redirect-to-friends/">
     	利用 Cloudflare Workers 创建一个跳转友链服务(乞丐级简易版)
     </a>
   </h2>
@@ -157,6 +157,11 @@
 	  Mar 3, 2021
 	</time>
 	
+    
+    <div class='cats'>
+        <a href="/categories/scripts/">scripts</a>
+    </div>
+
 	</section>
 	
 		<section class="toc-wrapper"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#pre-post"><span class="toc-number">1.</span> <span class="toc-text">pre-post()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#reuqired-%E2%80%98%E4%BE%9D%E8%B5%96%E2%80%99"><span class="toc-number">2.</span> <span class="toc-text">reuqired(‘依赖’)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#code-%E2%80%98%E4%BB%A3%E7%A0%81%E6%9C%AC%E4%BD%93%E2%80%99"><span class="toc-number">3.</span> <span class="toc-text">code(‘代码本体’)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#subject-%E2%80%98%E7%9B%AE%E5%89%8D%E5%8A%9F%E8%83%BD%E4%BB%8B%E7%BB%8D%E2%80%99"><span class="toc-number">4.</span> <span class="toc-text">subject(‘目前功能介绍’)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#subject-%E2%80%98example%E2%80%99"><span class="toc-number">5.</span> <span class="toc-text">subject(‘example’)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#end"><span class="toc-number">6.</span> <span class="toc-text">end()</span></a></li></ol></section>
@@ -304,6 +309,8 @@
     
         <li><a class="flat-box" href="/categories/service/kubernetes/"><div class='name'>kubernetes</div><div class='badget'>1</div></a></li>
     
+        <li><a class="flat-box" href="/categories/scripts/"><div class='name'>scripts</div><div class='badget'>1</div></a></li>
+    
         <li><a class="flat-box" href="/categories/service/"><div class='name'>service</div><div class='badget'>2</div></a></li>
     
     </ul>
@@ -358,7 +365,7 @@
 <script>
   var disqus_shortname = 'mitts-blog';
   
-  var disqus_url = 'https://blog.mitt.fun/nihility/2021/script/cf-workers-redirect-to-friends/';
+  var disqus_url = 'https://blog.mitt.fun/scripts/2021/script/cf-workers-redirect-to-friends/';
   
   (function(){
     var dsq = document.createElement('script');

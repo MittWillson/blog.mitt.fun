@@ -230,14 +230,14 @@
   </url>
   
   <url>
-    <loc>https://blog.mitt.fun/categories/service/kubernetes/</loc>
+    <loc>https://blog.mitt.fun/categories/scripts/</loc>
     <lastmod>2021-03-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://blog.mitt.fun/categories/scripts/</loc>
+    <loc>https://blog.mitt.fun/categories/service/kubernetes/</loc>
     <lastmod>2021-03-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>

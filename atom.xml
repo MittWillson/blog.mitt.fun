@@ -6,7 +6,7 @@
   <link href="https://blog.mitt.fun/atom.xml" rel="self"/>
   
   <link href="https://blog.mitt.fun/"/>
-  <updated>2021-03-03T12:33:09.000Z</updated>
+  <updated>2021-04-16T22:49:00.000Z</updated>
   <id>https://blog.mitt.fun/</id>
   
   <author>
@@ -15,6 +15,66 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>关于 《我被K8S蹂躏千百遍》的那些事</title>
+    <link href="https://blog.mitt.fun/service/kubernetes/2021/kubernetes/issues-of-k8s/"/>
+    <id>https://blog.mitt.fun/service/kubernetes/2021/kubernetes/issues-of-k8s/</id>
+    <published>2021-04-16T22:49:00.000Z</published>
+    <updated>2021-04-16T22:49:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>记录一些我遇到的K8S和Docker的问题以及相应的解决方案</p><span id="more"></span><h2 id="问题列表"><a href="#问题列表" class="headerlink" title="问题列表"></a>问题列表</h2><p><strong>WARN No swap limit support</strong></p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ sudo vim /etc/default/grub</span><br><span class="line"><span class="comment"># 追加以下内容</span></span><br><span class="line"><span class="comment"># 如果存在该变量则只追加内容</span></span><br><span class="line">GRUB_CMDLINE_LINUX=<span class="string">&quot;cgroup_enable=memory swapaccount=1&quot;</span></span><br><span class="line"></span><br><span class="line">$ sudo update-grub</span><br><span class="line"></span><br><span class="line"><span class="comment"># 需要重启生效</span></span><br></pre></td></tr></table></figure><p><strong>failed to allocate for range 0: no IP addresses available in range set: 172.32.xx.1-172.32.xx.254</strong></p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ rm -rf /var/lib/cni/networks/*</span><br><span class="line">$ systemctl restart containerd</span><br><span class="line">$ systemctl restart kubelet</span><br></pre></td></tr></table></figure><p><strong>Warning: Stopping docker.service, but it can still be activated by: docker.socket</strong></p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ rm -rf /lib/systemd/system/docker.socket</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;记录一些我遇到的K8S和Docker的问题以及相应的解决方案&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="service" scheme="https://blog.mitt.fun/categories/service/"/>
+    
+    <category term="kubernetes" scheme="https://blog.mitt.fun/categories/service/kubernetes/"/>
+    
+    
+    <category term="Kubernetes" scheme="https://blog.mitt.fun/tags/Kubernetes/"/>
+    
+    <category term="K8S" scheme="https://blog.mitt.fun/tags/K8S/"/>
+    
+    <category term="K3S" scheme="https://blog.mitt.fun/tags/K3S/"/>
+    
+    <category term="Issues" scheme="https://blog.mitt.fun/tags/Issues/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>快速扩容 Node 的 podCIDR IP范围</title>
+    <link href="https://blog.mitt.fun/service/kubernetes/2021/kubernetes/node-ip-cidr-extends/"/>
+    <id>https://blog.mitt.fun/service/kubernetes/2021/kubernetes/node-ip-cidr-extends/</id>
+    <published>2021-04-16T22:49:00.000Z</published>
+    <updated>2021-06-11T20:09:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="pre-post"><a href="#pre-post" class="headerlink" title="pre-post()"></a>pre-post()</h2><p>为了更好的压榨节点(因为穷买不起第二台), 所以在单台机器上跑了更多的服务，从而导致了更多的pod需要IP分配，而超量则产生了一个异常 <code>failed to allocate for range 0: no IP addresses available in range set</code>, 节点默认安装下来是 <code>/16</code> 的段，而每个节点会分到 <code>/24</code> 段，这意味着每个节点最多可分配 <code>256</code> 个 POD IP，这对于我这种精扒皮来说远远不够，所以就需要对节点的IP段进行扩容，让每个节点能分到更多的IP</p><span id="more"></span><!--## Confiuration('修改配置')为了能够让每个节点获取更大的IP段，我们需要修改 `Flannel` 的配置进行实现在Kubernetes里，Flannel的配置保存在Configmap里，路径为: `kube-system` 下的`configmap/kube-flannel-cfg`其中 `net-conf.json` 的配置则是我们需要修改的> 默认配置内容<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">net-conf.json:</span> <span class="string">|</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">&quot;Network&quot;:</span> <span class="string">&quot;10.244.0.0/16&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;Backend&quot;:</span> &#123;</span><br><span class="line">      <span class="attr">&quot;Type&quot;:</span> <span class="string">&quot;vxlan&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure><p>这里引申一下配置文档: <a href="https://github.com/flannel-io/flannel/blob/master/Documentation/configuration.md">Flannel Configuration</a></p><p>根据文档我们只需要修改 <code>SubnetLen</code> 即可，默认为 <code>24</code>(如果Network不小于24)</p><p>这里我们只需要改为 <code>22</code> 就能让每个节点的IP可用数量翻倍得到 <code>1022</code> 个IP，对我来说就足够用了, 毕竟跑太多pod也会导致容器操作响应慢等问题</p><blockquote><p>修改后的配置</p></blockquote><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">net-conf.json:</span> <span class="string">|</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">&quot;Network&quot;:</span> <span class="string">&quot;10.244.0.0/16&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;SubnetLen&quot;:</span> <span class="number">22</span>,</span><br><span class="line">    <span class="attr">&quot;Backend&quot;:</span> &#123;</span><br><span class="line">      <span class="attr">&quot;Type&quot;:</span> <span class="string">&quot;vxlan&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure><p>修改后杀掉 <code>kube-flannel</code> pod 重建，发现并没有生效，这是因为 <code>Node</code> 初始化了 <code>PodCIDR</code>，所以现在改变 <code>Flannel</code> 的配置并不会修改 <code>Node</code> 的 <code>PodCIDR</code></p><p>–&gt;</p><h2 id="修改Node"><a href="#修改Node" class="headerlink" title="修改Node"></a>修改Node</h2><p>由于 Node 信息无法直接修改，这里采取一种变相措施（有一定风险，自己承担），保存Node的配置，修改Node中PodCIDR信息，然后删除掉Node资源，趁Kubelet还没有反应过来就偷偷把修改过的Node资源加回去</p><blockquote><p>保存 node.yaml</p></blockquote><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get node test-worker -o yaml &gt; node.yaml</span><br></pre></td></tr></table></figure><blockquote><p>修改 node.yaml 的 podCIDR</p></blockquote><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">...</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">podCIDR:</span> <span class="number">10.32</span><span class="number">.2</span><span class="number">.0</span><span class="string">/22</span></span><br><span class="line">  <span class="attr">podCIDRs:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="number">10.32</span><span class="number">.2</span><span class="number">.0</span><span class="string">/22</span></span><br><span class="line"><span class="string">...</span></span><br></pre></td></tr></table></figure><p>这里我们只需要改为 <code>22</code> 就能让每个节点pod的IP可用数量翻倍得到 <code>1022</code> 个IP，对我来说就足够用了</p><blockquote><p>删除 node 信息</p></blockquote><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl delete <span class="keyword">node</span> <span class="title">test-worker</span></span><br></pre></td></tr></table></figure><blockquote><p>导入节点</p></blockquote><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> kubectl apply <span class="operator">-f</span> ./node.yaml</span><br></pre></td></tr></table></figure><p>然后就完成了，创建新pod的时候，就会从podCIDR和IP缓存文件信息里找可用IP创建，（不过奇怪的是我的pod并没有超过200，但依然出现IP池短缺的问题，可能是flannel在销毁pod后并没有销毁IP信息，导致IP一直被占用）</p>-->]]></content>
+    
+    
+    <summary type="html">&lt;h2 id=&quot;pre-post&quot;&gt;&lt;a href=&quot;#pre-post&quot; class=&quot;headerlink&quot; title=&quot;pre-post()&quot;&gt;&lt;/a&gt;pre-post()&lt;/h2&gt;&lt;p&gt;为了更好的压榨节点(因为穷买不起第二台), 所以在单台机器上跑了更多的服务，从而导致了更多的pod需要IP分配，而超量则产生了一个异常 &lt;code&gt;failed to allocate for range 0: no IP addresses available in range set&lt;/code&gt;, 节点默认安装下来是 &lt;code&gt;/16&lt;/code&gt; 的段，而每个节点会分到 &lt;code&gt;/24&lt;/code&gt; 段，这意味着每个节点最多可分配 &lt;code&gt;256&lt;/code&gt; 个 POD IP，这对于我这种精扒皮来说远远不够，所以就需要对节点的IP段进行扩容，让每个节点能分到更多的IP&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="service" scheme="https://blog.mitt.fun/categories/service/"/>
+    
+    <category term="kubernetes" scheme="https://blog.mitt.fun/categories/service/kubernetes/"/>
+    
+    
+    <category term="Kubernetes" scheme="https://blog.mitt.fun/tags/Kubernetes/"/>
+    
+    <category term="K8S" scheme="https://blog.mitt.fun/tags/K8S/"/>
+    
+    <category term="K3S" scheme="https://blog.mitt.fun/tags/K3S/"/>
+    
+    <category term="Issues" scheme="https://blog.mitt.fun/tags/Issues/"/>
+    
+    <category term="Flannel" scheme="https://blog.mitt.fun/tags/Flannel/"/>
+    
+  </entry>
   
   <entry>
     <title>利用 Cloudflare Workers 创建一个跳转友链服务(乞丐级简易版)</title>
@@ -104,17 +164,17 @@
     <category term="kubernetes" scheme="https://blog.mitt.fun/categories/service/kubernetes/"/>
     
     
-    <category term="Wireguard" scheme="https://blog.mitt.fun/tags/Wireguard/"/>
-    
-    <category term="Kilo" scheme="https://blog.mitt.fun/tags/Kilo/"/>
-    
-    <category term="Peer2Peer" scheme="https://blog.mitt.fun/tags/Peer2Peer/"/>
-    
     <category term="Kubernetes" scheme="https://blog.mitt.fun/tags/Kubernetes/"/>
     
     <category term="K8S" scheme="https://blog.mitt.fun/tags/K8S/"/>
     
     <category term="K3S" scheme="https://blog.mitt.fun/tags/K3S/"/>
+    
+    <category term="Wireguard" scheme="https://blog.mitt.fun/tags/Wireguard/"/>
+    
+    <category term="Kilo" scheme="https://blog.mitt.fun/tags/Kilo/"/>
+    
+    <category term="Peer2Peer" scheme="https://blog.mitt.fun/tags/Peer2Peer/"/>
     
   </entry>
   

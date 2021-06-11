@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   
-  <title>Tag: Friends | Mitt&#39;s Fun space!</title>
+  <title>快速扩容 Node 的 podCIDR IP范围 | Mitt&#39;s Fun space!</title>
   <meta name="description" content="Mitt 的菜鸡技术博客 | 可恶的Edison" />
   <meta name="keywords" content="" />
   <meta name="HandheldFriendly" content="True" />
@@ -12,14 +12,21 @@
   <link rel="shortcut icon" href="/favicon.png">
   <link rel="alternate" href="/atom.xml" title="Mitt's Fun space!" type="application/atom+xml">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Mitt 的菜鸡技术博客 | 可恶的Edison">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Mitt&#39;s Fun space!">
-<meta property="og:url" content="https://blog.mitt.fun/tags/Friends/index.html">
+  <meta name="description" content="pre-post()为了更好的压榨节点(因为穷买不起第二台), 所以在单台机器上跑了更多的服务，从而导致了更多的pod需要IP分配，而超量则产生了一个异常 failed to allocate for range 0: no IP addresses available in range set, 节点默认安装下来是 &#x2F;16 的段，而每个节点会分到 &#x2F;24 段，这意味着每个节点最多可分配 256">
+<meta property="og:type" content="article">
+<meta property="og:title" content="快速扩容 Node 的 podCIDR IP范围">
+<meta property="og:url" content="https://blog.mitt.fun/service/kubernetes/2021/kubernetes/node-ip-cidr-extends/index.html">
 <meta property="og:site_name" content="Mitt&#39;s Fun space!">
-<meta property="og:description" content="Mitt 的菜鸡技术博客 | 可恶的Edison">
+<meta property="og:description" content="pre-post()为了更好的压榨节点(因为穷买不起第二台), 所以在单台机器上跑了更多的服务，从而导致了更多的pod需要IP分配，而超量则产生了一个异常 failed to allocate for range 0: no IP addresses available in range set, 节点默认安装下来是 &#x2F;16 的段，而每个节点会分到 &#x2F;24 段，这意味着每个节点最多可分配 256">
 <meta property="og:locale">
+<meta property="article:published_time" content="2021-04-16T22:49:00.000Z">
+<meta property="article:modified_time" content="2021-06-11T20:09:00.000Z">
 <meta property="article:author" content="Mitt Willson">
+<meta property="article:tag" content="Kubernetes">
+<meta property="article:tag" content="K8S">
+<meta property="article:tag" content="K3S">
+<meta property="article:tag" content="Issues">
+<meta property="article:tag" content="Flannel">
 <meta name="twitter:card" content="summary">
     
   <link href="/fonts/inconsolata-titilliumweb.css" rel="stylesheet">
@@ -139,62 +146,125 @@
   <div class="l_body">
     <div class='container clearfix'>
       <div class='l_main'>
-        
-  <script>
-    window.subData= { title:'Tag : Friends'}
-  </script>
-
-<section class="post-list">
+        <article id="post-kubernetes/node-ip-cidr-extends"
+  class="post white-box article-type-post"
+  itemscope itemprop="blogPost">
+	<section class='meta'>
+	<h2 class="title">
+  	<a href="/service/kubernetes/2021/kubernetes/node-ip-cidr-extends/">
+    	快速扩容 Node 的 podCIDR IP范围
+    </a>
+  </h2>
+	<time>
+	  Apr 17, 2021
+	</time>
 	
-    <div class='post-wrapper'>
-      <article class="post reveal">
-  <section class="meta">
-    
-    <h2 class="title">
-      <a href="/scripts/2021/script/cf-workers-redirect-to-friends/">
-        利用 Cloudflare Workers 创建一个跳转友链服务(乞丐级简易版)
-      </a>
-    </h2>
-    
-    <time>
-      Mar 3, 2021
-    </time>
-		
     
     <div class='cats'>
-        <a href="/categories/scripts/">scripts</a>
+        <a href="/categories/service/">service</a>, <a href="/categories/service/kubernetes/">kubernetes</a>
     </div>
 
-  </section>
-  <section class="article typo">
-	  <h2 id="pre-post"><a href="#pre-post" class="headerlink" title="pre-post()"></a>pre-post()</h2><p>水了几篇博文胆子肥了起来，开始到处交换友链，但是想创建一个简便易维护的友链服务，前期先实现能跳转到目标链接，后期想能扩展扩展支持监控友链目标网站的有效状态，结合通知来实现报警，但本篇只实现了 <code>能用</code> （逃，如果没咕咕咕的话以后会升级代码并支持更高级的功能然后<del>再水一篇</del>发布新文章来介绍。</p>
+	</section>
+	
+		<section class="toc-wrapper"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#pre-post"><span class="toc-number">1.</span> <span class="toc-text">pre-post()</span></a></li></ol></section>
+	
+	<section class="article typo">
+  	<div class="article-entry" itemprop="articleBody">
+    	<h2 id="pre-post"><a href="#pre-post" class="headerlink" title="pre-post()"></a>pre-post()</h2><p>为了更好的压榨节点(因为穷买不起第二台), 所以在单台机器上跑了更多的服务，从而导致了更多的pod需要IP分配，而超量则产生了一个异常 <code>failed to allocate for range 0: no IP addresses available in range set</code>, 节点默认安装下来是 <code>/16</code> 的段，而每个节点会分到 <code>/24</code> 段，这意味着每个节点最多可分配 <code>256</code> 个 POD IP，这对于我这种精扒皮来说远远不够，所以就需要对节点的IP段进行扩容，让每个节点能分到更多的IP</p>
+<span id="more"></span>
+
+<!--
+
+## Confiuration('修改配置')
+
+为了能够让每个节点获取更大的IP段，我们需要修改 `Flannel` 的配置进行实现
+
+在Kubernetes里，Flannel的配置保存在Configmap里，路径为: `kube-system` 下的`configmap/kube-flannel-cfg`
+
+其中 `net-conf.json` 的配置则是我们需要修改的
+
+> 默认配置内容
+
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">net-conf.json:</span> <span class="string">|</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">&quot;Network&quot;:</span> <span class="string">&quot;10.244.0.0/16&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;Backend&quot;:</span> &#123;</span><br><span class="line">      <span class="attr">&quot;Type&quot;:</span> <span class="string">&quot;vxlan&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里引申一下配置文档: <a target="_blank" rel="noopener" href="https://github.com/flannel-io/flannel/blob/master/Documentation/configuration.md">Flannel Configuration</a></p>
+<p>根据文档我们只需要修改 <code>SubnetLen</code> 即可，默认为 <code>24</code>(如果Network不小于24)</p>
+<p>这里我们只需要改为 <code>22</code> 就能让每个节点的IP可用数量翻倍得到 <code>1022</code> 个IP，对我来说就足够用了, 毕竟跑太多pod也会导致容器操作响应慢等问题</p>
 <blockquote>
-<p>更新日期: 2021-03-03</p>
+<p>修改后的配置</p>
 </blockquote>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">net-conf.json:</span> <span class="string">|</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">&quot;Network&quot;:</span> <span class="string">&quot;10.244.0.0/16&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;SubnetLen&quot;:</span> <span class="number">22</span>,</span><br><span class="line">    <span class="attr">&quot;Backend&quot;:</span> &#123;</span><br><span class="line">      <span class="attr">&quot;Type&quot;:</span> <span class="string">&quot;vxlan&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
 
-    
-	  <div class="readmore">
-      <a href="/scripts/2021/script/cf-workers-redirect-to-friends/">Read More</a>
-    </div>
-    
-    
-    
-	  <div class="full-width auto-padding tags">
+<p>修改后杀掉 <code>kube-flannel</code> pod 重建，发现并没有生效，这是因为 <code>Node</code> 初始化了 <code>PodCIDR</code>，所以现在改变 <code>Flannel</code> 的配置并不会修改 <code>Node</code> 的 <code>PodCIDR</code></p>
+<p>–&gt;</p>
+<h2 id="修改Node"><a href="#修改Node" class="headerlink" title="修改Node"></a>修改Node</h2><p>由于 Node 信息无法直接修改，这里采取一种变相措施（有一定风险，自己承担），保存Node的配置，修改Node中PodCIDR信息，然后删除掉Node资源，趁Kubelet还没有反应过来就偷偷把修改过的Node资源加回去</p>
+<blockquote>
+<p>保存 node.yaml</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get node test-worker -o yaml &gt; node.yaml</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>修改 node.yaml 的 podCIDR</p>
+</blockquote>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">...</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">podCIDR:</span> <span class="number">10.32</span><span class="number">.2</span><span class="number">.0</span><span class="string">/22</span></span><br><span class="line">  <span class="attr">podCIDRs:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="number">10.32</span><span class="number">.2</span><span class="number">.0</span><span class="string">/22</span></span><br><span class="line"><span class="string">...</span></span><br></pre></td></tr></table></figure>
+
+<p>这里我们只需要改为 <code>22</code> 就能让每个节点pod的IP可用数量翻倍得到 <code>1022</code> 个IP，对我来说就足够用了</p>
+<blockquote>
+<p>删除 node 信息</p>
+</blockquote>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl delete <span class="keyword">node</span> <span class="title">test-worker</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>导入节点</p>
+</blockquote>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> kubectl apply <span class="operator">-f</span> ./node.yaml</span><br></pre></td></tr></table></figure>
+
+<p>然后就完成了，创建新pod的时候，就会从podCIDR和IP缓存文件信息里找可用IP创建，（不过奇怪的是我的pod并没有超过200，但依然出现IP池短缺的问题，可能是flannel在销毁pod后并没有销毁IP信息，导致IP一直被占用）</p>
+-->
+  	</div>
+	  
+	  <div class="article-tags tags">
       
-        <a href="/tags/Cloudflare/">Cloudflare</a>
+        <a href="/tags/Kubernetes/">Kubernetes</a>
       
-        <a href="/tags/Scripts/">Scripts</a>
+        <a href="/tags/K8S/">K8S</a>
       
-        <a href="/tags/Friends/">Friends</a>
+        <a href="/tags/K3S/">K3S</a>
+      
+        <a href="/tags/Issues/">Issues</a>
+      
+        <a href="/tags/Flannel/">Flannel</a>
       
 	  </div>
     
-  </section>
+		
+	
+		<div class="art-item-footer">
+				
+					<span class="art-item-left"><i class="icon icon-chevron-thin-left"></i>prev：<a href="/service/kubernetes/2021/kubernetes/issues-of-k8s/" rel="prev"  title="关于 《我被K8S蹂躏千百遍》的那些事">
+						关于 《我被K8S蹂躏千百遍》的那些事 
+					</a></span>
+				
+				
+					<span class="art-item-right">next：<a href="/scripts/2021/script/cf-workers-redirect-to-friends/" rel="next"  title="利用 Cloudflare Workers 创建一个跳转友链服务(乞丐级简易版)">
+						利用 Cloudflare Workers 创建一个跳转友链服务(乞丐级简易版)
+					</a><i class="icon icon-chevron-thin-right"></i></span>
+				
+		</div>
+	
+	</section>
+	
+		<section id="comments">
+			<div id="disqus_thread"></div>
+		</section>
+	
 </article>
-    </div>
-  
-</section>
-
+<script>
+	window.subData = {
+		title: '快速扩容 Node 的 podCIDR IP范围',
+		tools: true
+	}
+</script>
 
       </div>
       <aside class='l_side'>
@@ -314,11 +384,13 @@
 <script>
   var disqus_shortname = 'mitts-blog';
   
+  var disqus_url = 'https://blog.mitt.fun/service/kubernetes/2021/kubernetes/node-ip-cidr-extends/';
+  
   (function(){
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
   })();
 </script>

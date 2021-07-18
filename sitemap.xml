@@ -4,14 +4,21 @@
   <url>
     <loc>https://blog.mitt.fun/icons/manifest.json</loc>
     
-    <lastmod>2021-07-16</lastmod>
+    <lastmod>2021-07-18</lastmod>
     
   </url>
   
   <url>
     <loc>https://blog.mitt.fun/messages/index.html</loc>
     
-    <lastmod>2021-07-16</lastmod>
+    <lastmod>2021-07-18</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.mitt.fun/service/kubernetes/2021/kubernetes/hello-velero/</loc>
+    
+    <lastmod>2021-07-18</lastmod>
     
   </url>
   
@@ -74,7 +81,7 @@
 
   <url>
     <loc>https://blog.mitt.fun/</loc>
-    <lastmod>2021-07-16</lastmod>
+    <lastmod>2021-07-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -82,161 +89,168 @@
   
   <url>
     <loc>https://blog.mitt.fun/tags/Milestone/</loc>
-    <lastmod>2021-07-16</lastmod>
+    <lastmod>2021-07-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://blog.mitt.fun/tags/Docker/</loc>
-    <lastmod>2021-07-16</lastmod>
+    <lastmod>2021-07-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://blog.mitt.fun/tags/DNS/</loc>
-    <lastmod>2021-07-16</lastmod>
+    <lastmod>2021-07-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://blog.mitt.fun/tags/%E5%9F%9F%E5%90%8D%E9%82%AE%E7%AE%B1/</loc>
-    <lastmod>2021-07-16</lastmod>
+    <lastmod>2021-07-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://blog.mitt.fun/tags/%E4%BC%81%E4%B8%9A%E9%82%AE%E7%AE%B1/</loc>
-    <lastmod>2021-07-16</lastmod>
+    <lastmod>2021-07-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://blog.mitt.fun/tags/GEODNS/</loc>
-    <lastmod>2021-07-16</lastmod>
+    <lastmod>2021-07-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://blog.mitt.fun/tags/%E5%8C%BA%E5%9F%9F%E8%A7%A3%E6%9E%90/</loc>
-    <lastmod>2021-07-16</lastmod>
+    <lastmod>2021-07-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://blog.mitt.fun/tags/MX%E5%85%B1%E5%AD%98/</loc>
-    <lastmod>2021-07-16</lastmod>
+    <lastmod>2021-07-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://blog.mitt.fun/tags/MX/</loc>
-    <lastmod>2021-07-16</lastmod>
+    <lastmod>2021-07-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://blog.mitt.fun/tags/CNAME/</loc>
-    <lastmod>2021-07-16</lastmod>
+    <lastmod>2021-07-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://blog.mitt.fun/tags/Cloudflare/</loc>
-    <lastmod>2021-07-16</lastmod>
+    <lastmod>2021-07-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://blog.mitt.fun/tags/Dnspod/</loc>
-    <lastmod>2021-07-16</lastmod>
+    <lastmod>2021-07-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://blog.mitt.fun/tags/%E7%99%BE%E5%BA%A6CDN/</loc>
-    <lastmod>2021-07-16</lastmod>
+    <lastmod>2021-07-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://blog.mitt.fun/tags/Kubernetes/</loc>
-    <lastmod>2021-07-16</lastmod>
+    <lastmod>2021-07-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://blog.mitt.fun/tags/K8S/</loc>
-    <lastmod>2021-07-16</lastmod>
+    <lastmod>2021-07-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://blog.mitt.fun/tags/K3S/</loc>
-    <lastmod>2021-07-16</lastmod>
+    <lastmod>2021-07-18</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.mitt.fun/tags/Velero/</loc>
+    <lastmod>2021-07-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://blog.mitt.fun/tags/Issues/</loc>
-    <lastmod>2021-07-16</lastmod>
+    <lastmod>2021-07-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://blog.mitt.fun/tags/Wireguard/</loc>
-    <lastmod>2021-07-16</lastmod>
+    <lastmod>2021-07-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://blog.mitt.fun/tags/Kilo/</loc>
-    <lastmod>2021-07-16</lastmod>
+    <lastmod>2021-07-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://blog.mitt.fun/tags/Peer2Peer/</loc>
-    <lastmod>2021-07-16</lastmod>
+    <lastmod>2021-07-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://blog.mitt.fun/tags/Flannel/</loc>
-    <lastmod>2021-07-16</lastmod>
+    <lastmod>2021-07-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://blog.mitt.fun/tags/Scripts/</loc>
-    <lastmod>2021-07-16</lastmod>
+    <lastmod>2021-07-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://blog.mitt.fun/tags/Friends/</loc>
-    <lastmod>2021-07-16</lastmod>
+    <lastmod>2021-07-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
@@ -245,28 +259,28 @@
   
   <url>
     <loc>https://blog.mitt.fun/categories/service/</loc>
-    <lastmod>2021-07-16</lastmod>
+    <lastmod>2021-07-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://blog.mitt.fun/categories/dns/</loc>
-    <lastmod>2021-07-16</lastmod>
+    <lastmod>2021-07-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://blog.mitt.fun/categories/service/kubernetes/</loc>
-    <lastmod>2021-07-16</lastmod>
+    <lastmod>2021-07-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://blog.mitt.fun/categories/scripts/</loc>
-    <lastmod>2021-07-16</lastmod>
+    <lastmod>2021-07-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>

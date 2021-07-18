@@ -187,7 +187,7 @@
 <blockquote>
 <p>准备一个凭证文件 <code>credentials-velero</code></p>
 </blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ cat &gt;&gt; credentials-velero &lt;&lt;<span class="string">EOF</span></span><br><span class="line"><span class="string">[default]</span></span><br><span class="line"><span class="string">aws_access_key_id = accesskey</span></span><br><span class="line"><span class="string">aws_secret_access_key = secretkey</span></span><br><span class="line"><span class="string">EOF</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ cat &gt;&gt; credentials-velero &lt;&lt;<span class="string">EOF</span></span><br><span class="line"><span class="string">[default]</span></span><br><span class="line"><span class="string">aws_access_key_id = &lt;accesskey&gt;</span></span><br><span class="line"><span class="string">aws_secret_access_key = &lt;secretkey&gt;</span></span><br><span class="line"><span class="string">EOF</span></span><br></pre></td></tr></table></figure>
 
 <p>Minio 的地址是 <code>http://minio.default.svc:9000</code></p>
 <p>Bucket 是 <code>backups</code>，并且已经赋予了读写权限</p>
@@ -202,23 +202,23 @@
 </tr>
 </thead>
 <tbody><tr>
-<td>–provider</td>
+<td>provider</td>
 <td>存储插件</td>
 </tr>
 <tr>
-<td>–plugins</td>
+<td>plugins</td>
 <td>额外的插件，这里装的是S3插件，我这里使用的是v1.2.0，建议正式安装前查询下最新的版本或使用 latest 作为 image tag</td>
 </tr>
 <tr>
-<td>–secret-file</td>
+<td>secret-file</td>
 <td>凭证文件，提供路径</td>
 </tr>
 <tr>
-<td>–use-volume-snapshots</td>
+<td>use-volume-snapshots</td>
 <td>启用存储快照，由于我CSI用的本地存储不支持快照，所以设置false</td>
 </tr>
 <tr>
-<td>–backup-location-config</td>
+<td>backup-location-config</td>
 <td>S3插件配置</td>
 </tr>
 </tbody></table>
@@ -252,7 +252,7 @@
 <blockquote>
 <p>同样我们需要先创建一个凭证文件</p>
 </blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ cat &gt;&gt; credentials-velero-qiniu &lt;&lt;<span class="string">EOF</span></span><br><span class="line"><span class="string">[default]</span></span><br><span class="line"><span class="string">aws_access_key_id = accesskey</span></span><br><span class="line"><span class="string">aws_secret_access_key = secretkey</span></span><br><span class="line"><span class="string">EOF</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ cat &gt;&gt; credentials-velero-qiniu &lt;&lt;<span class="string">EOF</span></span><br><span class="line"><span class="string">[default]</span></span><br><span class="line"><span class="string">aws_access_key_id = &lt;accesskey&gt;</span></span><br><span class="line"><span class="string">aws_secret_access_key = &lt;secretkey&gt;</span></span><br><span class="line"><span class="string">EOF</span></span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>然后将凭证创建为一个 <code>secret</code></p>
@@ -274,11 +274,11 @@
 </tr>
 </thead>
 <tbody><tr>
-<td>–credential</td>
+<td>credential</td>
 <td>凭证secret，格式为 &lt;secret-name&gt;=&lt;key&gt;</td>
 </tr>
 <tr>
-<td>–default</td>
+<td>default</td>
 <td>设置为默认存储位置</td>
 </tr>
 </tbody></table>

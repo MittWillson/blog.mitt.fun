@@ -6,7 +6,7 @@
   <link href="https://blog.mitt.fun/atom.xml" rel="self"/>
   
   <link href="https://blog.mitt.fun/"/>
-  <updated>2021-07-18T10:13:00.000Z</updated>
+  <updated>2021-08-13T06:19:00.000Z</updated>
   <id>https://blog.mitt.fun/</id>
   
   <author>
@@ -15,6 +15,40 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>波卡链/达尔文链治理操作和事件流程笔记 - Updating</title>
+    <link href="https://blog.mitt.fun/blockchains/2021/blockchains/substrate-governance-events/"/>
+    <id>https://blog.mitt.fun/blockchains/2021/blockchains/substrate-governance-events/</id>
+    <published>2021-08-13T06:19:00.000Z</published>
+    <updated>2021-08-13T06:19:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="pre-post"><a href="#pre-post" class="headerlink" title="pre-post()"></a>pre-post()</h2><p>本文为笔记本记录，主要记录 <code>polkadot</code> 和 <code>darwinia</code> 网络下的治理部分操作和事件触发流程，内容极度不可信，会持续更新</p><p>已忽略记录 <code>Deposit</code> 事件, 如非特权操作，<code>Extercis</code> 均收取手续费</p><span id="more"></span><h2 id="原词词典"><a href="#原词词典" class="headerlink" title="原词词典"></a>原词词典</h2><table><thead><tr><th>中文</th><th>原意</th></tr></thead><tbody><tr><td>提案</td><td>Proposal</td></tr><tr><td>原象</td><td>PreImage</td></tr><tr><td>世纪周期</td><td>ERA</td></tr><tr><td>抵押</td><td>Staking</td></tr><tr><td>票</td><td>Power</td></tr><tr><td>公投</td><td>Referendum</td></tr><tr><td>支出周期</td><td>Spend Period</td></tr><tr><td>销毁</td><td>Burnt</td></tr><tr><td>块</td><td>Block</td></tr><tr><td>延迟</td><td>Delay</td></tr><tr><td>议会</td><td>Council</td></tr><tr><td>技术委员会</td><td>Tech</td></tr><tr><td>财政部</td><td>Treasury</td></tr><tr><td>小费</td><td>Treasury Tip</td></tr></tbody></table><h2 id="民主提案"><a href="#民主提案" class="headerlink" title="民主提案"></a>民主提案</h2><blockquote><p>递交提案(无原象)</p></blockquote><p>递交需要 <code>proposal_hash</code> 但无需对内容提交，这是为了避免提案人支出大量费用，可在第三方用 <code>proposal_hash</code> 对提案内容进行验证以证明提案内容一致</p><p>Extercis:</p><ul><li>democracy.propose</li></ul><p>Events:</p><ol><li>balances.Reserved</li><li>democracy.Proposed</li></ol><blockquote><p>公投</p></blockquote><p>接下来请移步到 <a href>公投部分</a></p><h2 id="议会提案"><a href="#议会提案" class="headerlink" title="议会提案"></a>议会提案</h2><p>参与提案和投票的是议会成员，之后如果转为公投则为持币的全民</p><blockquote><p>递交提案(无原象)</p></blockquote><p>Extercis:</p><ul><li>council.propose</li></ul><p>Events:</p><ol><li>council.Proposed</li></ol><blockquote><p>投票</p></blockquote><p>每个成员投票都会产生 <code>Voted</code> 事件</p><p>Extercis:</p><ul><li>council.vote</li></ul><p>Events:</p><ul><li>council.Voted</li></ul><blockquote><p>结束投票</p></blockquote><p>Extercis:</p><ul><li>technicalcommittee.close</li></ul><p>Events:</p><ol><li>technicalcommittee.Closed</li></ol><blockquote><p>公投(如果提案投票移交公投的话)</p></blockquote><p>接下来请移步到 <a href>公投部分</a></p><h2 id="技术委员会提案"><a href="#技术委员会提案" class="headerlink" title="技术委员会提案"></a>技术委员会提案</h2><blockquote><p>递交提案(无原象)</p></blockquote><p>Extercis:</p><ul><li>technicalcommittee.propose</li></ul><p>Events:</p><ol><li>technicalcommittee.Proposed</li></ol><blockquote><p>技术委员会投票</p></blockquote><p>Extercis:</p><ul><li>technicalcommittee.vote</li></ul><p>Events:</p><ol><li>technicalcommittee.Voted</li></ol><blockquote><p>结束投票</p></blockquote><p>Extercis:</p><ul><li>technicalcommittee.close</li></ul><p>Events:</p><ol><li>technicalcommittee.Closed</li></ol><blockquote><p>公投(如果提案投票移交公投的话)</p></blockquote><p>接下来请移步到 <a href>公投部分</a></p><h2 id="财政部提案"><a href="#财政部提案" class="headerlink" title="财政部提案"></a>财政部提案</h2><p>主要用于项目拨款提案，比如宣传、技术费用等</p><blockquote><p>递交提案(无原象)</p></blockquote><p>Extercis:</p><ul><li>treasury.propose_spend</li></ul><p>Events:</p><ol><li>treasury.Proposed</li></ol><blockquote><p>移交提案</p></blockquote><p>Extercis:</p><ul><li>treasury.reject_proposal</li></ul><p>与议会提案相通，接下来会创建议会提案并走流程</p><p>接下来请移步到 <a href>议会提案部分</a></p><h2 id="公投-需先有提案"><a href="#公投-需先有提案" class="headerlink" title="公投(需先有提案)"></a>公投(需先有提案)</h2><blockquote><p>提案已递交公投</p></blockquote><p>Events:</p><ol><li>balances.Unreserved</li><li>democracy.Tabled</li><li>democracy.Started</li></ol><blockquote><p>公民投票(开始)</p></blockquote><p>Extercis:</p><ul><li>democracy.vote</li></ul><blockquote><p>提交原象</p></blockquote><p>Extercis:</p><ul><li>democracy.note_preimage</li><li>democracy.note_imminent_preimage</li></ul><p>Events:</p><ol><li>democracy.PreimageNoted</li></ol><blockquote><p>取消公投(分支)</p></blockquote><p>这个情况比较特殊，其中有一种情况，议会的提案可以紧急取消公投</p><p>紧急取消公投的提案内容是: <code>democracy.emergency_cancel</code> ref_index</p><p>Events:</p><ul><li>democracy.Cancelled</li></ul><blockquote><p>系统选票(结束)</p></blockquote><p>只有在公投设定的结束时间(块和延迟)到来才会结束并系统选票</p><p>Events:</p><ul><li>democracy.NotPassed</li><li>democracy.Passed</li></ul><blockquote><p>提案执行</p></blockquote><p>Events:</p><ol><li>democracy.PreimageUsed</li><li>system.CodeUpdated (取决于提案内容)</li><li>democracy.Excuted</li></ol>]]></content>
+    
+    
+    <summary type="html">&lt;h2 id=&quot;pre-post&quot;&gt;&lt;a href=&quot;#pre-post&quot; class=&quot;headerlink&quot; title=&quot;pre-post()&quot;&gt;&lt;/a&gt;pre-post()&lt;/h2&gt;&lt;p&gt;本文为笔记本记录，主要记录 &lt;code&gt;polkadot&lt;/code&gt; 和 &lt;code&gt;darwinia&lt;/code&gt; 网络下的治理部分操作和事件触发流程，内容极度不可信，会持续更新&lt;/p&gt;
+&lt;p&gt;已忽略记录 &lt;code&gt;Deposit&lt;/code&gt; 事件, 如非特权操作，&lt;code&gt;Extercis&lt;/code&gt; 均收取手续费&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="blockchains" scheme="https://blog.mitt.fun/categories/blockchains/"/>
+    
+    
+    <category term="BlockChains" scheme="https://blog.mitt.fun/tags/BlockChains/"/>
+    
+    <category term="Polkadot" scheme="https://blog.mitt.fun/tags/Polkadot/"/>
+    
+    <category term="Governance" scheme="https://blog.mitt.fun/tags/Governance/"/>
+    
+    <category term="Darwinia" scheme="https://blog.mitt.fun/tags/Darwinia/"/>
+    
+    <category term="Crab" scheme="https://blog.mitt.fun/tags/Crab/"/>
+    
+    <category term="Substrate" scheme="https://blog.mitt.fun/tags/Substrate/"/>
+    
+    <category term="Notebook" scheme="https://blog.mitt.fun/tags/Notebook/"/>
+    
+  </entry>
   
   <entry>
     <title>《预防手残 Velero 集群备份部署 初见！》</title>

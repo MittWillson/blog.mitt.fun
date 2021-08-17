@@ -12,12 +12,12 @@
   <link rel="shortcut icon" href="/favicon.png">
   <link rel="alternate" href="/atom.xml" title="Mitt's Fun space!" type="application/atom+xml">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="pre-post()本文为笔记本记录，主要记录 polkadot 和 darwinia 网络下的治理部分操作和事件触发流程，内容极度不可信，会持续更新 已忽略记录 Deposit 事件, 如非特权操作，Extercis 均收取手续费">
+  <meta name="description" content="pre-post()本文为笔记本记录，主要记录 polkadot 和 darwinia 网络下的治理部分操作和事件触发流程，内容极度不可信，会持续更新 已忽略记录 Deposit 事件, 如非特权操作，Extrinsic 均收取手续费">
 <meta property="og:type" content="article">
 <meta property="og:title" content="波卡链&#x2F;达尔文链治理操作和事件流程笔记 - Updating">
 <meta property="og:url" content="https://blog.mitt.fun/blockchains/2021/blockchains/substrate-governance-events/index.html">
 <meta property="og:site_name" content="Mitt&#39;s Fun space!">
-<meta property="og:description" content="pre-post()本文为笔记本记录，主要记录 polkadot 和 darwinia 网络下的治理部分操作和事件触发流程，内容极度不可信，会持续更新 已忽略记录 Deposit 事件, 如非特权操作，Extercis 均收取手续费">
+<meta property="og:description" content="pre-post()本文为笔记本记录，主要记录 polkadot 和 darwinia 网络下的治理部分操作和事件触发流程，内容极度不可信，会持续更新 已忽略记录 Deposit 事件, 如非特权操作，Extrinsic 均收取手续费">
 <meta property="og:locale">
 <meta property="article:published_time" content="2021-08-13T06:19:00.000Z">
 <meta property="article:modified_time" content="2021-08-13T06:19:00.000Z">
@@ -168,12 +168,12 @@
 
 	</section>
 	
-		<section class="toc-wrapper"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#pre-post"><span class="toc-number">1.</span> <span class="toc-text">pre-post()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8E%9F%E8%AF%8D%E8%AF%8D%E5%85%B8"><span class="toc-number">2.</span> <span class="toc-text">原词词典</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B0%91%E4%B8%BB%E6%8F%90%E6%A1%88"><span class="toc-number">3.</span> <span class="toc-text">民主提案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%AE%E4%BC%9A%E6%8F%90%E6%A1%88"><span class="toc-number">4.</span> <span class="toc-text">议会提案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8A%80%E6%9C%AF%E5%A7%94%E5%91%98%E4%BC%9A%E6%8F%90%E6%A1%88"><span class="toc-number">5.</span> <span class="toc-text">技术委员会提案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B4%A2%E6%94%BF%E9%83%A8%E6%8F%90%E6%A1%88"><span class="toc-number">6.</span> <span class="toc-text">财政部提案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AC%E6%8A%95-%E9%9C%80%E5%85%88%E6%9C%89%E6%8F%90%E6%A1%88"><span class="toc-number">7.</span> <span class="toc-text">公投(需先有提案)</span></a></li></ol></section>
+		<section class="toc-wrapper"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#pre-post"><span class="toc-number">1.</span> <span class="toc-text">pre-post()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8E%9F%E8%AF%8D%E8%AF%8D%E5%85%B8"><span class="toc-number">2.</span> <span class="toc-text">原词词典</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B0%91%E4%B8%BB%E6%8F%90%E6%A1%88"><span class="toc-number">3.</span> <span class="toc-text">民主提案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%AE%E4%BC%9A%E6%8F%90%E6%A1%88"><span class="toc-number">4.</span> <span class="toc-text">议会提案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8A%80%E6%9C%AF%E5%A7%94%E5%91%98%E4%BC%9A%E6%8F%90%E6%A1%88"><span class="toc-number">5.</span> <span class="toc-text">技术委员会提案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B4%A2%E6%94%BF%E9%83%A8%E6%8F%90%E6%A1%88"><span class="toc-number">6.</span> <span class="toc-text">财政部提案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AC%E6%8A%95"><span class="toc-number">7.</span> <span class="toc-text">公投</span></a></li></ol></section>
 	
 	<section class="article typo">
   	<div class="article-entry" itemprop="articleBody">
     	<h2 id="pre-post"><a href="#pre-post" class="headerlink" title="pre-post()"></a>pre-post()</h2><p>本文为笔记本记录，主要记录 <code>polkadot</code> 和 <code>darwinia</code> 网络下的治理部分操作和事件触发流程，内容极度不可信，会持续更新</p>
-<p>已忽略记录 <code>Deposit</code> 事件, 如非特权操作，<code>Extercis</code> 均收取手续费</p>
+<p>已忽略记录 <code>Deposit</code> 事件, 如非特权操作，<code>Extrinsic</code> 均收取手续费</p>
 <span id="more"></span>
 
 <h2 id="原词词典"><a href="#原词词典" class="headerlink" title="原词词典"></a>原词词典</h2><table>
@@ -244,7 +244,7 @@
 <p>递交提案(无原象)</p>
 </blockquote>
 <p>递交需要 <code>proposal_hash</code> 但无需对内容提交，这是为了避免提案人支出大量费用，可在第三方用 <code>proposal_hash</code> 对提案内容进行验证以证明提案内容一致</p>
-<p>Extercis:</p>
+<p>Extrinsic:</p>
 <ul>
 <li>democracy.propose</li>
 </ul>
@@ -256,12 +256,12 @@
 <blockquote>
 <p>公投</p>
 </blockquote>
-<p>接下来请移步到 <a href>公投部分</a></p>
+<p>接下来请移步到 <a href="#%E5%85%AC%E6%8A%95">公投部分</a></p>
 <h2 id="议会提案"><a href="#议会提案" class="headerlink" title="议会提案"></a>议会提案</h2><p>参与提案和投票的是议会成员，之后如果转为公投则为持币的全民</p>
 <blockquote>
 <p>递交提案(无原象)</p>
 </blockquote>
-<p>Extercis:</p>
+<p>Extrinsic:</p>
 <ul>
 <li>council.propose</li>
 </ul>
@@ -273,7 +273,7 @@
 <p>投票</p>
 </blockquote>
 <p>每个成员投票都会产生 <code>Voted</code> 事件</p>
-<p>Extercis:</p>
+<p>Extrinsic:</p>
 <ul>
 <li>council.vote</li>
 </ul>
@@ -284,7 +284,7 @@
 <blockquote>
 <p>结束投票</p>
 </blockquote>
-<p>Extercis:</p>
+<p>Extrinsic:</p>
 <ul>
 <li>technicalcommittee.close</li>
 </ul>
@@ -293,13 +293,25 @@
 <li>technicalcommittee.Closed</li>
 </ol>
 <blockquote>
+<p>Member 成员提案并执行</p>
+</blockquote>
+<p>会直接执行，但可能会失败，具体权限方面还得在研究</p>
+<p>Extrinsic:</p>
+<ul>
+<li>council.execute</li>
+</ul>
+<p>Events:</p>
+<ul>
+<li>council.MemberExecuted</li>
+</ul>
+<blockquote>
 <p>公投(如果提案投票移交公投的话)</p>
 </blockquote>
-<p>接下来请移步到 <a href>公投部分</a></p>
+<p>接下来请移步到 <a href="#%E5%85%AC%E6%8A%95">公投部分</a></p>
 <h2 id="技术委员会提案"><a href="#技术委员会提案" class="headerlink" title="技术委员会提案"></a>技术委员会提案</h2><blockquote>
 <p>递交提案(无原象)</p>
 </blockquote>
-<p>Extercis:</p>
+<p>Extrinsic:</p>
 <ul>
 <li>technicalcommittee.propose</li>
 </ul>
@@ -310,7 +322,7 @@
 <blockquote>
 <p>技术委员会投票</p>
 </blockquote>
-<p>Extercis:</p>
+<p>Extrinsic:</p>
 <ul>
 <li>technicalcommittee.vote</li>
 </ul>
@@ -321,7 +333,7 @@
 <blockquote>
 <p>结束投票</p>
 </blockquote>
-<p>Extercis:</p>
+<p>Extrinsic:</p>
 <ul>
 <li>technicalcommittee.close</li>
 </ul>
@@ -332,12 +344,12 @@
 <blockquote>
 <p>公投(如果提案投票移交公投的话)</p>
 </blockquote>
-<p>接下来请移步到 <a href>公投部分</a></p>
+<p>接下来请移步到 <a href="#%E5%85%AC%E6%8A%95">公投部分</a></p>
 <h2 id="财政部提案"><a href="#财政部提案" class="headerlink" title="财政部提案"></a>财政部提案</h2><p>主要用于项目拨款提案，比如宣传、技术费用等</p>
 <blockquote>
 <p>递交提案(无原象)</p>
 </blockquote>
-<p>Extercis:</p>
+<p>Extrinsic:</p>
 <ul>
 <li>treasury.propose_spend</li>
 </ul>
@@ -348,13 +360,14 @@
 <blockquote>
 <p>移交提案</p>
 </blockquote>
-<p>Extercis:</p>
+<p>Extrinsic:</p>
 <ul>
 <li>treasury.reject_proposal</li>
 </ul>
 <p>与议会提案相通，接下来会创建议会提案并走流程</p>
 <p>接下来请移步到 <a href>议会提案部分</a></p>
-<h2 id="公投-需先有提案"><a href="#公投-需先有提案" class="headerlink" title="公投(需先有提案)"></a>公投(需先有提案)</h2><blockquote>
+<h2 id="公投"><a href="#公投" class="headerlink" title="公投"></a>公投</h2><p>需要先有提案</p>
+<blockquote>
 <p>提案已递交公投</p>
 </blockquote>
 <p>Events:</p>
@@ -366,14 +379,14 @@
 <blockquote>
 <p>公民投票(开始)</p>
 </blockquote>
-<p>Extercis:</p>
+<p>Extrinsic:</p>
 <ul>
 <li>democracy.vote</li>
 </ul>
 <blockquote>
 <p>提交原象</p>
 </blockquote>
-<p>Extercis:</p>
+<p>Extrinsic:</p>
 <ul>
 <li>democracy.note_preimage</li>
 <li>democracy.note_imminent_preimage</li>
